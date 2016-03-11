@@ -26,16 +26,13 @@ RUN mkdir -p /var/nanobox && \
       -o /var/nanobox/portal.md5 \
       https://s3.amazonaws.com/tools.nanopack.io/portal/linux/amd64/portal.md5
 
-# # Install hooks
-# # Hooks are installed as a separate package and NOT included in this image
-# # so that hooks can be updated over time without needing to destroy the
-# # running container
-# RUN rm -rf /var/gonano/db/pkgin && \
-#     /opt/gonano/bin/pkgin -y up && \
-#     /opt/gonano/bin/pkgin -y in \
-#         jq \
-#         hooks-update && \
-#     rm -rf /var/gonano/db/pkgin/cache
+# Install hooks
+RUN mkdir -p /opt/nanobox/hooks && \
+    curl \
+      -f \
+      -k \
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.tgz \
+        | tar -xz -C /opt/nanobox/hooks
 
 # Cleanup disk
 RUN rm -rf \
