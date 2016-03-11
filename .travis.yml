@@ -1,0 +1,9 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - modprobe ip_vs
+
+script: sudo tests/run.sh
