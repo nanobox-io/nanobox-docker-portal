@@ -36,9 +36,9 @@ RUN mkdir -p /opt/nanobox/hooks && \
 
 # Cleanup disk
 RUN rm -rf \
-        /var/lib/apt/lists/* \
-        /tmp/* \
-        /var/tmp/*
+      /var/lib/apt/lists/* \
+      /tmp/* \
+      /var/tmp/*
 
 # Run runit automatically
 CMD /opt/gonano/bin/nanoinit
