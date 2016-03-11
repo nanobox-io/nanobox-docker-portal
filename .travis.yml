@@ -1,9 +1,14 @@
 sudo: required
 
+dist: trusty
+
 services:
   - docker
 
 before_install:
   - modprobe ip_vs
+  - sudo apt-get -y purge docker-engine
+  - bash <(curl -fsSL https://get.docker.com/)
+  - docker version
 
-script: sudo tests/run.sh
+script: sudo test/run_all.sh

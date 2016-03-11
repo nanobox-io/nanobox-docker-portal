@@ -56,4 +56,11 @@ Vagrant.configure(2) do |config|
     modprobe ip_vs
   SCRIPT
 
+  # build the docker image
+  config.vm.provision "shell", inline: <<-SCRIPT
+    echo "Building docker image..."
+    cd /vagrant
+    docker build -t nanobox/portal --no-cache=true .
+  SCRIPT
+
 end
