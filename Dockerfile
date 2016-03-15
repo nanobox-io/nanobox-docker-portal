@@ -5,9 +5,9 @@ FROM nanobox/runit
 # Create directories
 RUN mkdir -p /var/log/gonano
 
-# Install ipvsadm
+# Install ipvsadm and rsync
 RUN apt-get update -qq && \
-    apt-get install -y ipvsadm && \
+    apt-get install -y ipvsadm rsync && \
     apt-get clean all
 
 # Download portal
