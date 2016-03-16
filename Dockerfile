@@ -3,7 +3,7 @@
 FROM nanobox/runit
 
 # Create directories
-RUN mkdir -p /var/log/gonano
+RUN mkdir -p /var/log/gonano /var/nanobox
 
 # Install ipvsadm and rsync
 RUN apt-get update -qq && \
@@ -33,6 +33,14 @@ RUN mkdir -p /opt/nanobox/hooks && \
       -k \
       https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.tgz \
         | tar -xz -C /opt/nanobox/hooks
+
+# Download hooks md5 (used to perform updates)
+RUN mkdir -p /opt/nanobox/hooks && \
+    curl \
+      -f \
+      -k \
+      -o /var/nanobox/hooks.md5 \
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.md5
 
 # Cleanup disk
 RUN rm -rf \
