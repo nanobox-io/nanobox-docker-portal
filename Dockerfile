@@ -6,9 +6,9 @@ RUN mkdir -p \
   /var/nanobox \
   /opt/nanobox/hooks
 
-# Install ipvsadm, iptables, and rsync
+# Install ipvsadm, iptables, nginx, and rsync
 RUN apt-get update -qq && \
-    apt-get install -y ipvsadm iptables rsync && \
+    apt-get install -y ipvsadm iptables nginx rsync && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
