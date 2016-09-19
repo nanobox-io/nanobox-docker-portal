@@ -8,7 +8,7 @@ RUN mkdir -p \
 
 # Install ipvsadm, iptables, nginx, and rsync
 RUN apt-get update -qq && \
-    apt-get install -y ipvsadm iptables nginx rsync && \
+    apt-get install -y ipvsadm iptables nginx rsync iputils-arping && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
