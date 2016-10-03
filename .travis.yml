@@ -13,3 +13,16 @@ before_install:
   - docker build -t nanobox/portal .
 
 script: sudo test/run_all.sh
+
+after_success:
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+  - docker build -t ${NAMESPACE}/portal .
+  - docker tag ${NAMESPACE}/portal ${NAMESPACE}/portal:beta;
+  - docker push ${REMOTE}${NAMESPACE}/portal:beta;
+  - if [ "$BRANCH" == "master" ]; then
+    docker push ${REMOTE}${NAMESPACE}/portal;
+    else
+    docker tag ${NAMESPACE}/portal ${NAMESPACE}/portal:${BRANCH//\//_};
+    docker push ${REMOTE}${NAMESPACE}/portal:${BRANCH//\//_};
+    fi
