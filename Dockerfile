@@ -1,44 +1,45 @@
-# -*- mode: Dockerfile; tab-width: 4;indent-tabs-mode: nil;-*-
-# vim: ts=4 sw=4 ft=Dockerfile et: 1
 FROM nanobox/runit
 
 # Create directories
-RUN mkdir -p /var/log/gonano
+RUN mkdir -p \
+  /var/log/gonano \
+  /var/nanobox \
+  /opt/nanobox/hooks
 
-# Install ipvsadm
+# Install ipvsadm, iptables, nginx, and rsync
 RUN apt-get update -qq && \
-    apt-get install -y ipvsadm && \
-    apt-get clean all
+    apt-get install -y ipvsadm iptables nginx rsync iputils-arping && \
+    apt-get clean all && \
+    rm -rf /var/lib/apt/lists/*
 
 # Download portal
 RUN curl \
       -f \
       -k \
       -o /usr/local/bin/portal \
-      https://s3.amazonaws.com/tools.nanopack.io/portal/linux/amd64/portal && \
+      https://d3ep67zochz54j.cloudfront.net/portal/linux/amd64/portal && \
     chmod 755 /usr/local/bin/portal
 
 # Download md5 (used to perform updates in hooks)
-RUN mkdir -p /var/nanobox && \
-    curl \
+RUN curl \
       -f \
       -k \
       -o /var/nanobox/portal.md5 \
-      https://s3.amazonaws.com/tools.nanopack.io/portal/linux/amd64/portal.md5
+      https://d3ep67zochz54j.cloudfront.net/portal/linux/amd64/portal.md5
 
 # Install hooks
-RUN mkdir -p /opt/nanobox/hooks && \
-    curl \
+RUN curl \
       -f \
       -k \
-      https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.tgz \
+      https://d1ormdui8qdvue.cloudfront.net/hooks/portal-stable.tgz \
         | tar -xz -C /opt/nanobox/hooks
 
-# Cleanup disk
-RUN rm -rf \
-      /var/lib/apt/lists/* \
-      /tmp/* \
-      /var/tmp/*
+# Download hooks md5 (used to perform updates)
+RUN curl \
+      -f \
+      -k \
+      -o /var/nanobox/hooks.md5 \
+      https://d1ormdui8qdvue.cloudfront.net/hooks/portal-stable.md5
 
 # Run runit automatically
 CMD [ "/opt/gonano/bin/nanoinit" ]
