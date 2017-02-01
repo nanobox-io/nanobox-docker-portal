@@ -24,6 +24,7 @@ after_success:
   - docker tag ${NAMESPACE}/portal:squashed ${NAMESPACE}/portal:beta;
   - docker push ${REMOTE}${NAMESPACE}/portal:beta;
   - if [ "$BRANCH" == "master" ]; then
+    docker tag ${NAMESPACE}/portal:squashed ${NAMESPACE}/portal;
     docker push ${REMOTE}${NAMESPACE}/portal;
     else
     docker tag ${NAMESPACE}/portal:squashed ${NAMESPACE}/portal:${BRANCH//\//_};
