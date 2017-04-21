@@ -31,7 +31,7 @@ RUN curl \
 RUN curl \
       -f \
       -k \
-      https://d1ormdui8qdvue.cloudfront.net/hooks/portal-stable.tgz \
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.tgz \
         | tar -xz -C /opt/nanobox/hooks
 
 # Download hooks md5 (used to perform updates)
@@ -39,7 +39,7 @@ RUN curl \
       -f \
       -k \
       -o /var/nanobox/hooks.md5 \
-      https://d1ormdui8qdvue.cloudfront.net/hooks/portal-stable.md5
+      https://s3.amazonaws.com/tools.nanobox.io/hooks/portal-stable.md5
 
 # Run runit automatically
 CMD [ "/opt/gonano/bin/nanoinit" ]
