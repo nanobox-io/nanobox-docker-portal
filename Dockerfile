@@ -41,5 +41,7 @@ RUN curl \
       -o /var/nanobox/hooks.md5 \
       https://d1ormdui8qdvue.cloudfront.net/hooks/portal-stable.md5
 
+WORKDIR /data
+
 # Run runit automatically
 CMD [ "/opt/gonano/bin/nanoinit" ]
