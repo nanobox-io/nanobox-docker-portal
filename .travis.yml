@@ -7,9 +7,6 @@ services:
 
 before_install:
   - sudo modprobe ip_vs
-  - sudo apt-get -y purge docker-engine
-  - bash <(curl -fsSL https://get.docker.com/)
-  - docker version
   - sudo apt-get -y install python-pip
   - sudo pip install docker-squash
   - docker build -t nanobox/portal .
