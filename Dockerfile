@@ -17,7 +17,7 @@ RUN curl \
       -f \
       -k \
       -o /usr/local/bin/portal \
-      https://d3ep67zochz54j.cloudfront.net/portal/linux/amd64/portal && \
+      https://s3.amazonaws.com/tools.nanopack.io/portal/linux/amd64/portal && \
     chmod 755 /usr/local/bin/portal
 
 # Download md5 (used to perform updates in hooks)
@@ -25,7 +25,7 @@ RUN curl \
       -f \
       -k \
       -o /var/nanobox/portal.md5 \
-      https://d3ep67zochz54j.cloudfront.net/portal/linux/amd64/portal.md5
+      https://s3.amazonaws.com/tools.nanopack.io/portal/linux/amd64/portal.md5
 
 # Install hooks
 RUN curl \
