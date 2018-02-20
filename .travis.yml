@@ -8,7 +8,7 @@ services:
 before_install:
   - sudo modprobe ip_vs
   - sudo apt-get -y install python-pip
-  - sudo pip install docker-squash
+  - sudo pip install docker==2.7.0 docker-squash
   - docker build -t nanobox/portal .
 
 script: sudo test/run_all.sh
